@@ -10,6 +10,12 @@ class Dollar
   def times(mult)
     self.class.new(@amount * mult)
   end
+
+  def equal?(dollar)
+    return false if dollar.nil?
+
+    @amount == dollar.amount
+  end
 end
 
 describe Dollar do
@@ -20,6 +26,24 @@ describe Dollar do
 
     expect(ten.amount).to eq(10)
   end
+
+  it '$5 should be equal $5' do
+    five = Dollar.new(5)
+
+    expect(five.equal?(Dollar.new(5))).to be_truthy
+  end
+
+  it '$5 should be different from $7' do
+    five = Dollar.new(5)
+
+    expect(five.equal?(Dollar.new(7))).to be_falsey
+  end
+
+  it '$5 should be different from nil' do
+    five = Dollar.new(5)
+
+    expect(five.equal?(nil)).to be_falsey
+  end
 end
 
 
@@ -28,3 +52,7 @@ end
 # done ==> $5 * 2 = $10
 # done ==> Dorllar side effect (we've already done that returning a value in times method
 # Money rounding?
+# done ==> equal()
+# done =>> equal nil
+# equal object
+# hasCode()
