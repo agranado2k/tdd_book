@@ -26,4 +26,5 @@ end
 ## Test list
 # $5 + 10 CHF = $10 if rate is 2:1
 # done ==> $5 * 2 = $10
+# done ==> Dorllar side effect (we've already done that returning a value in times method
 # Money rounding?
