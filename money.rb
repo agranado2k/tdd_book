@@ -1,6 +1,6 @@
 require 'rspec'
 
-class Dollar
+class Money
   attr_reader :amount
 
   def initialize(amount)
@@ -18,31 +18,27 @@ class Dollar
   end
 end
 
-describe Dollar do
+class Dollar < Money
+end
+
+class Franc < Money
+end
+
+shared_examples 'Money' do
   it 'multipli amount' do
-    five = Dollar.new(5)
+    five = described_class.new(5)
 
-    expect(Dollar.new(10)).to be_equal(five.times(2))
-    expect(Dollar.new(15)).to be_equal(five.times(3))
+    expect(described_class.new(10)).to be_equal(five.times(2))
+    expect(described_class.new(15)).to be_equal(five.times(3))
   end
+end
 
-  it '$5 should be equal $5' do
-    five = Dollar.new(5)
+describe Dollar do
+  it_behaves_like 'Money'
+end
 
-    expect(five.equal?(Dollar.new(5))).to be_truthy
-  end
-
-  it '$5 should be different from $7' do
-    five = Dollar.new(5)
-
-    expect(five.equal?(Dollar.new(7))).to be_falsey
-  end
-
-  it '$5 should be different from nil' do
-    five = Dollar.new(5)
-
-    expect(five.equal?(nil)).to be_falsey
-  end
+describe Franc do
+  it_behaves_like 'Money'
 end
 
 
@@ -55,3 +51,4 @@ end
 # done =>> equal nil
 # equal object
 # hasCode()
+# done ==> 5 CHF * 2 = 10 CHF
