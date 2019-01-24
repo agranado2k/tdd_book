@@ -22,9 +22,8 @@ describe Dollar do
   it 'multipli amount' do
     five = Dollar.new(5)
 
-    ten = five.times(2)
-
-    expect(ten.amount).to eq(10)
+    expect(Dollar.new(10)).to be_equal(five.times(2))
+    expect(Dollar.new(15)).to be_equal(five.times(3))
   end
 
   it '$5 should be equal $5' do
