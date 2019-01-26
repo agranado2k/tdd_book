@@ -14,7 +14,7 @@ class Money
   def equal?(money)
     return false if money.nil?
 
-    @amount == money.amount
+    @amount == money.amount && self.class == money.class
   end
 end
 
@@ -39,6 +39,9 @@ end
 
 describe Franc do
   it_behaves_like 'Money'
+
+
+  it { expect(Franc.new(15)).to_not be_equal(Dollar.new(15)) }
 end
 
 
@@ -55,4 +58,4 @@ end
 # done ==> Dollar/Franc duplication
 # deno ==> Common equals
 # done ==> Common times
-# Compare Francs with Dollars
+# done ==> Compare Francs with Dollars
