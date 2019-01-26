@@ -16,6 +16,14 @@ class Money
 
     @amount == money.amount && self.class == money.class
   end
+
+  def self.dollar(amount)
+    Dollar.new(amount)
+  end
+
+  def self.franc(amount)
+    Franc.new(amount)
+  end
 end
 
 class Dollar < Money
@@ -24,24 +32,24 @@ end
 class Franc < Money
 end
 
-shared_examples 'Money' do
+describe Dollar do
   it 'multipli amount' do
-    five = described_class.new(5)
+    five = Money.dollar(5)
 
-    expect(described_class.new(10)).to be_equal(five.times(2))
-    expect(described_class.new(15)).to be_equal(five.times(3))
+    expect(Money.dollar(10)).to be_equal(five.times(2))
+    expect(Money.dollar(15)).to be_equal(five.times(3))
   end
 end
 
-describe Dollar do
-  it_behaves_like 'Money'
-end
-
 describe Franc do
-  it_behaves_like 'Money'
+  it 'multipli amount' do
+    five = Money.franc(5)
 
+    expect(Money.franc(10)).to be_equal(five.times(2))
+    expect(Money.franc(15)).to be_equal(five.times(3))
+  end
 
-  it { expect(Franc.new(15)).to_not be_equal(Dollar.new(15)) }
+  it { expect(Money.franc(15)).to_not be_equal(Money.dollar(15)) }
 end
 
 
@@ -59,3 +67,4 @@ end
 # deno ==> Common equals
 # done ==> Common times
 # done ==> Compare Francs with Dollars
+# Currency?
