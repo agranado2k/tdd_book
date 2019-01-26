@@ -11,10 +11,10 @@ class Money
     self.class.new(@amount * mult)
   end
 
-  def equal?(dollar)
-    return false if dollar.nil?
+  def equal?(money)
+    return false if money.nil?
 
-    @amount == dollar.amount
+    @amount == money.amount
   end
 end
 
@@ -52,3 +52,7 @@ end
 # equal object
 # hasCode()
 # done ==> 5 CHF * 2 = 10 CHF
+# done ==> Dollar/Franc duplication
+# deno ==> Common equals
+# done ==> Common times
+# Compare Francs with Dollars
