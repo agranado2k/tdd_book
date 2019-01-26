@@ -1,14 +1,15 @@
 require 'rspec'
 
 class Money
-  attr_reader :amount
+  attr_reader :amount, :currency
 
-  def initialize(amount)
+  def initialize(amount, currency)
     @amount = amount
+    @currency = currency
   end
 
   def times(mult)
-    self.class.new(@amount * mult)
+    self.class.new(@amount * mult, @currency)
   end
 
   def equal?(money)
@@ -18,11 +19,11 @@ class Money
   end
 
   def self.dollar(amount)
-    Dollar.new(amount)
+    Dollar.new(amount, 'USD')
   end
 
   def self.franc(amount)
-    Franc.new(amount)
+    Franc.new(amount, 'CHF')
   end
 end
 
@@ -30,6 +31,13 @@ class Dollar < Money
 end
 
 class Franc < Money
+end
+
+describe Money do
+  context 'currency' do
+    it { expect(Money.dollar(5).currency()).to eq("USD") }
+    it { expect(Money.franc(5).currency()).to eq("CHF") }
+  end
 end
 
 describe Dollar do
