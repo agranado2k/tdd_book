@@ -9,7 +9,7 @@ class Money
   end
 
   def times(mult)
-    self.class.new(@amount * mult, @currency)
+    self.class.new(amount * mult, currency)
   end
 
   def equal?(money)
@@ -24,6 +24,16 @@ class Money
 
   def self.franc(amount)
     Money.new(amount, 'CHF')
+  end
+
+  def +(added)
+    Money.new(amount + added.amount, currency)
+  end
+end
+
+class Bank
+  def reduce(exp, currency)
+    exp
   end
 end
 
@@ -43,6 +53,22 @@ describe Money do
 
   context 'Franc is not Dollar' do
     it { expect(Money.franc(15)).to_not be_equal(Money.dollar(15)) }
+  end
+
+  context 'Addition' do
+    it '$5 + $5 = $10' do
+      five = Money.dollar(5)
+
+      expect(Money.dollar(5) + five).to be_equal(Money.dollar(10))
+    end
+
+    it 'reduce expression' do
+      bank = Bank.new()
+      five = Money.dollar(5)
+      sum = five + five
+      reduced = bank.reduce(sum, 'USD')
+      expect(reduced).to be_equal(Money.dollar(10))
+    end
   end
 end
 
