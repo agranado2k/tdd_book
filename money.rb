@@ -15,41 +15,25 @@ class Money
   def equal?(money)
     return false if money.nil?
 
-    @amount == money.amount && self.class == money.class
+    @amount == money.amount && currency == money.currency
   end
 
   def self.dollar(amount)
-    Dollar.new(amount, 'USD')
+    Money.new(amount, 'USD')
   end
 
   def self.franc(amount)
-    Franc.new(amount, 'CHF')
+    Money.new(amount, 'CHF')
   end
 end
 
-class Dollar < Money
-end
-
-class Franc < Money
-end
 
 describe Money do
   context 'currency' do
     it { expect(Money.dollar(5).currency()).to eq("USD") }
     it { expect(Money.franc(5).currency()).to eq("CHF") }
   end
-end
 
-describe Dollar do
-  it 'multipli amount' do
-    five = Money.dollar(5)
-
-    expect(Money.dollar(10)).to be_equal(five.times(2))
-    expect(Money.dollar(15)).to be_equal(five.times(3))
-  end
-end
-
-describe Franc do
   it 'multipli amount' do
     five = Money.franc(5)
 
@@ -59,7 +43,6 @@ describe Franc do
 
   it { expect(Money.franc(15)).to_not be_equal(Money.dollar(15)) }
 end
-
 
 ## Test list
 # $5 + 10 CHF = $10 if rate is 2:1
@@ -75,4 +58,4 @@ end
 # deno ==> Common equals
 # done ==> Common times
 # done ==> Compare Francs with Dollars
-# Currency?
+# done ==>  Currency?
