@@ -41,7 +41,9 @@ describe Money do
     expect(Money.franc(15)).to be_equal(five.times(3))
   end
 
-  it { expect(Money.franc(15)).to_not be_equal(Money.dollar(15)) }
+  context 'Franc is not Dollar' do
+    it { expect(Money.franc(15)).to_not be_equal(Money.dollar(15)) }
+  end
 end
 
 ## Test list
