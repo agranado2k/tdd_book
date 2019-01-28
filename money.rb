@@ -26,14 +26,31 @@ class Money
     Money.new(amount, 'CHF')
   end
 
-  def +(added)
-    Money.new(amount + added.amount, currency)
+  def +(addend)
+    Sum.new(self, addend)
+  end
+
+  def reduce(to_currency)
+    self
   end
 end
 
 class Bank
-  def reduce(exp, currency)
-    exp
+  def reduce(exp, to_currency)
+    exp.reduce(to_currency)
+  end
+end
+
+class Sum
+  attr_reader :augend, :addend
+
+  def initialize(augend, addend)
+    @augend = augend
+    @addend = addend
+  end
+
+  def reduce(to_currency)
+    Money.new(augend.amount + addend.amount, to_currency)
   end
 end
 
@@ -56,7 +73,17 @@ describe Money do
   end
 
   context 'Addition' do
+    it 'Sum is expression' do
+      bank = Bank.new()
+      five = Money.dollar(5)
+      sum = five + five
+
+      expect(sum.augend).to be_equal(five)
+      expect(sum.addend).to be_equal(five)
+    end
+
     it '$5 + $5 = $10' do
+      skip
       five = Money.dollar(5)
 
       expect(Money.dollar(5) + five).to be_equal(Money.dollar(10))
@@ -68,6 +95,13 @@ describe Money do
       sum = five + five
       reduced = bank.reduce(sum, 'USD')
       expect(reduced).to be_equal(Money.dollar(10))
+    end
+
+    it 'reduce Money' do
+      bank = Bank.new()
+      five = Money.dollar(5)
+      reduced = bank.reduce(five, 'USD')
+      expect(reduced).to be_equal(Money.dollar(5))
     end
   end
 end
@@ -87,3 +121,8 @@ end
 # done ==> Common times
 # done ==> Compare Francs with Dollars
 # done ==>  Currency?
+# $5 + $5 = $10
+# Return Money from  $5 + $5
+# done ==> Bank.reduce(Money)
+# Reduce Money with currency
+# Reduce(Bank, string)
