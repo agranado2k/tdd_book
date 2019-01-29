@@ -63,8 +63,8 @@ class Sum
     @addend = addend
   end
 
-  def reduce(bank, to_currency)
-    Money.new(augend.amount + addend.amount, to_currency)
+  def reduce(bank, to)
+    Money.new(augend.reduce(bank, to).amount + addend.reduce(bank, to).amount, to)
   end
 end
 
@@ -124,6 +124,17 @@ describe Money do
       money = Money.franc(2)
       reduced = bank.reduce(money, 'USD')
       expect(reduced).to be_equal(Money.dollar(1))
+    end
+
+    it 'Add with mixed currencies' do
+      fiveBucks = Money.dollar(5)
+      tenFrancs = Money.franc(10)
+      bank = Bank.new
+      bank.add_rate('CHF', 'USD', 2)
+
+      result = bank.reduce(fiveBucks + tenFrancs, 'USD')
+
+      expect(result).to be_equal(Money.dollar(10))
     end
   end
 end
