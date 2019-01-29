@@ -149,14 +149,11 @@ describe Bank do
 end
 
 ## Test list
-# $5 + 10 CHF = $10 if rate is 2:1
+# done ==> $5 + 10 CHF = $10 if rate is 2:1
 # done ==> $5 * 2 = $10
 # done ==> Dorllar side effect (we've already done that returning a value in times method
-# Money rounding?
 # done ==> equal()
 # done =>> equal nil
-# equal object
-# hasCode()
 # done ==> 5 CHF * 2 = 10 CHF
 # done ==> Dollar/Franc duplication
 # deno ==> Common equals
@@ -164,7 +161,6 @@ end
 # done ==> Compare Francs with Dollars
 # done ==>  Currency?
 # done ==> $5 + $5 = $10
-# Return Money from  $5 + $5
 # done ==> Bank.reduce(Money)
 # done ==> Reduce Money with currency
 # done ==> Reduce(Bank, string)
